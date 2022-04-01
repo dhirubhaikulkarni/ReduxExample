@@ -1,0 +1,60 @@
+OutputComp.js
+import React, { useContext } from 'react';
+import { AppContext } from './ParentComp';
+
+export default function OutputComp() {
+  const { username } = useContext(AppContext);
+  return <div>Username: {username}</div>;
+}
+
+
+InputComp.js
+
+import React, { useContext } from 'react';
+import { AppContext } from './ParentComp';
+
+export default function InputComp() {
+  const { setUsername } = useContext(AppContext);
+  return (
+    <div>
+      <input onChange={(e) => setUsername(e.target.value)}></input>
+    </div>
+  );
+}
+
+
+ParentComp.js
+
+import React, { createContext, useState } from 'react';
+import InputComp from './InputComp';
+import OutputComp from './OutputComp';
+
+export const AppContext = createContext(null);
+
+export default function ParentComp() {
+  const [username, setUsername] = useState('Dhirubhai123');
+  return (
+    <div>
+      <AppContext.Provider value={{ username, setUsername }}>
+        <InputComp />
+        <OutputComp />
+      </AppContext.Provider>
+    </div>
+  );
+}
+
+App.js
+
+import React from 'react';
+import './style.css';
+import ParentComp from './ParentComp';
+
+export default function App() {
+  return (
+    <div>
+      <h1>Hello StackBlitz!</h1>
+      <p>Start editing from Start</p>
+      <ParentComp />
+    </div>
+  );
+}

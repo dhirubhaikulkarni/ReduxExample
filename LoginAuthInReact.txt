@@ -1,0 +1,122 @@
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+
+function Form(props) {
+  const userlogin = props.user;
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleusername = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlepassword = (event) => {
+    setPassword(event.target.value);
+  };
+  console.log(username);
+  console.log(password);
+
+  const handleSubmit = () => {
+    if (
+      username == userlogin[0].username &&
+      password == userlogin[0].password
+    ) {
+      console.log('Login Successfull');
+      //<Redirect to="/welcome" />;
+      window.location = '/welcome';
+    } else {
+      console.log('Login Not Succssfull');
+    }
+  };
+
+  return (
+    <div>
+      <label>Enter Username: </label>
+      <input
+        type="email"
+        className="form-control"
+        id="email"
+        placeholder="Enter Username"
+        onChange={handleusername}
+      />
+      <br />
+      <br />
+      <label>Enter Password: </label>
+      <input
+        type="password"
+        className="form-control"
+        id="password"
+        placeholder="Enter Password"
+        onChange={handlepassword}
+      />
+      <br />
+      <br />
+      <input
+        type="button"
+        className="form-control"
+        value="Login"
+        onClick={handleSubmit}
+      />
+    </div>
+  );
+}
+
+export default Form;
+
+
+import React from 'react';
+import Form from './Form';
+import './style.css';
+
+export default function App() {
+  const userlogin = [
+    {
+      username: 'Dhiru',
+      password: 'Dhiru',
+    },
+    {
+      username: 'sunil',
+      password: 'Sunil123',
+    },
+  ];
+  return (
+    <div>
+      <h3>Hello Now We Are Creating Login Form...</h3>
+      <Form user={userlogin} />
+    </div>
+  );
+}
+
+
+import React from 'react';
+
+function Welcome() {
+  return (
+    <div>
+      <h1>Welcome To Our React page </h1>
+    </div>
+  );
+}
+
+export default Welcome;
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import Form from './Form';
+import Welcome from './Welcome';
+import App from './App';
+
+const routing = (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/Form" element={<Form />} />
+      <Route exact path="/welcome" element={<Welcome />} />
+    </Routes>
+  </BrowserRouter>
+);
+
+ReactDOM.render(routing, document.getElementById('root'));
